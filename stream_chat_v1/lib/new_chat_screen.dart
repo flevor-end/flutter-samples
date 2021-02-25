@@ -50,60 +50,60 @@ class _NewChatScreenState extends State<NewChatScreen> {
   @override
   void initState() {
     super.initState();
-    channel = StreamChat.of(context).client.channel('messaging');
-    _controller = TextEditingController()..addListener(_userNameListener);
-
-    _searchFocusNode.addListener(() async {
-      if (_searchFocusNode.hasFocus && !_showUserList) {
-        setState(() {
-          _showUserList = true;
-        });
-      }
-    });
-
-    _messageInputFocusNode.addListener(() async {
-      if (_messageInputFocusNode.hasFocus && _selectedUsers.isNotEmpty) {
-        final chatState = StreamChat.of(context);
-
-        final res = await chatState.client.queryChannels(
-          options: {
-            'state': false,
-            'watch': false,
-          },
-          filter: {
-            'members': [
-              ..._selectedUsers.map((e) => e.id),
-              chatState.user.id,
-            ],
-            'distinct': true,
-          },
-          messageLimit: 0,
-          paginationParams: PaginationParams(
-            limit: 1,
-          ),
-        );
-
-        final _channelExisted = res.length == 1;
-        if (_channelExisted) {
-          channel = res.first;
-          await channel.watch();
-        } else {
-          channel = chatState.client.channel(
-            'messaging',
-            extraData: {
-              'members': [
-                ..._selectedUsers.map((e) => e.id),
-                chatState.user.id,
-              ],
-            },
-          );
-        }
-
-        setState(() {
-          _showUserList = false;
-        });
-      }
-    });
+    // channel = StreamChat.of(context).client.channel('messaging');
+    // _controller = TextEditingController()..addListener(_userNameListener);
+    //
+    // _searchFocusNode.addListener(() async {
+    //   if (_searchFocusNode.hasFocus && !_showUserList) {
+    //     setState(() {
+    //       _showUserList = true;
+    //     });
+    //   }
+    // });
+    //
+    // _messageInputFocusNode.addListener(() async {
+    //   if (_messageInputFocusNode.hasFocus && _selectedUsers.isNotEmpty) {
+    //     final chatState = StreamChat.of(context);
+    //
+    //     final res = await chatState.client.queryChannels(
+    //       options: {
+    //         'state': false,
+    //         'watch': false,
+    //       },
+    //       filter: {
+    //         'members': [
+    //           ..._selectedUsers.map((e) => e.id),
+    //           chatState.user.id,
+    //         ],
+    //         'distinct': true,
+    //       },
+    //       messageLimit: 0,
+    //       paginationParams: PaginationParams(
+    //         limit: 1,
+    //       ),
+    //     );
+    //
+    //     final _channelExisted = res.length == 1;
+    //     if (_channelExisted) {
+    //       channel = res.first;
+    //       await channel.watch();
+    //     } else {
+    //       channel = chatState.client.channel(
+    //         'messaging',
+    //         extraData: {
+    //           'members': [
+    //             ..._selectedUsers.map((e) => e.id),
+    //             chatState.user.id,
+    //           ],
+    //         },
+    //       );
+    //     }
+    //
+    //     setState(() {
+    //       _showUserList = false;
+    //     });
+    //   }
+    // });
   }
 
   @override
